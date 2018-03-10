@@ -1,29 +1,62 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="stylesheets/style.css">
+<link rel="stylesheet" href="stylesheets/dashstyle.css">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+<link rel="icon" href="images/pin.png">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
 
-<a href="create_paste.php">Create new Paste</a>
+
+<body class="dash-body">
+    <header role="banner" class="sticky-top">
+        <nav class="navbar nav nav-link">
+            <div class="row">
+                <a class="btn col-lg-2" href="create_paste.php">Create new Paste</a>
+                <a class="btn btn-outline-danger  col-sm-1  float-right" href="logout.php">Logout</a><br/>
+            </div>
+        </nav>
+    </header>
 <?php
 session_start();
 include "config/config.php";
-if(isset($_SESSION['username'])) {
-	$username = $_SESSION['username'];
-	$sql = "SELECT * FROM pastes WHERE username='$username' ORDER BY timestamp DESC";
-	$re = mysqli_query($con, $sql);
-	$num = mysqli_num_rows($re);
-	$rows = mysqli_fetch_array($re);
-	if($num>0){
-		echo "You have created ".$num." pastes";
-		while($row = $re->fetch_array()){
-  			echo "<h3>".$row['title']."</h3>" . " " . $row['content'];
-  			echo "<br />";
-  		}
-	}
-	else
-		echo "<br/>You have not created any pastes yet.<br/><a href='create_paste.php'>Click here</a> to create one";
-}
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    $sql = "SELECT * FROM pastes WHERE username='$username' ORDER BY timestamp DESC";
+    $re = mysqli_query($con, $sql);
+    $num = mysqli_num_rows($re);
+    if ($num > 0) {
+
+        echo  " <div class='container'>
+                <div class='text-white p-lg-4' style='margin:5px'>
+                    You have created " . $num . " pastes
+                </div><br/>";
+
+        echo  " <div class='paste-cards'>
+                    <div class='container'> ";
+                        while ($row = $re->fetch_array()) {
+                                $ulink = $row['ulink'];
+                                echo "<a href='viewpaste.php?pasteid=" .$ulink."'>";
+                                echo"<div class='col-lg-4'>
+                                        <div class='card'>
+                                            <h3>"
+                                    .          $row['title']
+                                    .      "</h3> 
+                                        </div>
+                                    </div>
+                                    </a>   ";
+                        }
+                        echo "  
+                    </div>
+                </div>
+                </div>";
+    } 
+    else
+        echo "<br/>You have not created any pastes yet.<br/><a href='create_paste.php'>Click here</a> to create one";
+
+} 
 else
-header("Location:index.php");
+    header("Location:index.php");
+
 ?>
-<a href="logout.php">Logout</a><br/>
+</body>

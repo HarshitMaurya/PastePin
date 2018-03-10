@@ -1,0 +1,55 @@
+.opening-body{
+    background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+	background-size: 400% 400%;
+	animation: Gradient 10s ease infinite;
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.dash-body {
+	  background-image: url('../images/grad.jpg');
+}
+
+.login-container {
+	padding:10vh;
+	margin-top: 17vh;
+}
+
+.register-container {
+	padding:10vh;
+	margin-top: 10vh;
+}
+
+.login-button{
+	border:1px solid #ca3d8b;
+	color:#ca3d8b;
+	transition: background-color 0.5s;
+}
+
+.login-button:hover {
+	background-color:#ca3d8b;
+	border:1px solid #ca3d8b;
+}
+
+.register-button{
+	background-color: #c14b82;	
+	border: 1px dashed #44306f;
+}
+.register-button:hover{
+	background-color: #8a0f4d;
+	border: 1px solid #960092;
+
+}
+
+.navbar{
+}
